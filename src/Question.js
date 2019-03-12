@@ -6,11 +6,27 @@ const ActualQuestion = styled.p`
 display: inline-block;
 `
 
-const Question = ({question}) => (
-  <ActualQuestion>
-    {question.text}
-    {question.responses.map(response => <div><input type='radio' /><label>{response}</label></div>)}
-  </ActualQuestion>
-)
+const ActualButton = styled.button`
+`
+
+class Question extends Component {
+
+  render () {
+    return (
+
+      <ActualQuestion>
+        {this.props.question.text}
+        <div>
+          <input type='radio' value='' /><label>{this.props.question.responses[0]}</label>
+          <input type='radio' value='' /><label>{this.props.question.responses[1]}</label>
+          <input type='radio' value='' /><label>{this.props.question.responses[2]}</label>
+          <ActualButton onClick={this.submitResponse}>Submit</ActualButton>
+        </div>
+
+      </ActualQuestion>
+    )
+  }
+
+}
 
 export default Question

@@ -33,12 +33,32 @@ code {
 }
 
 #cat-licking {
-  position: absolute;
-  bottom: 2%;
-  right: 25%;
+  position: relative;
 }
+
+#cat-sideways {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#cat-back {
+  position: relative;
+}
+
+
 
 #open-gate {
   border: 1px solid;
   border-radius: 25px;
+}
+
+#responses {
+  border: 1px solid;
+  background-color: white;
+  border-radius: 5px;
+  width: fit-content;
+  position: absolute;
+  bottom: 120px;
+  left: 400px;
 }

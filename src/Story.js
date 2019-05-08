@@ -15,40 +15,53 @@ const Container = styled.div`
 class Story extends Component {
 
   state = {
-    currentScene: 0,
-    currentText: 0
+    scenes: scenes,
+    currentScene: scenes[0].id,
+    catSideways: false,
+    catLicking: true,
+    sound: true,
+    currentText: 0,
+    catBack: false
   }
 
-  sceneSwitcher = (scene) => {
-    this.setState({currentScene:  scene})
-  }
 
   goToNextScene = () => {
-    if(this.state.currentScene === scenes.length) {
-      return
-    }
-    this.setState({currentScene:  this.state.currentScene + 1})
+    this.setState({currentScene:  this.state.currentScene + 1, catBack: true, catSideways: false, currentText: 0})
   }
 
   goToNextText = () => {
-      this.setState({currentText: this.state.currentText + 1})
+      this.setState({currentText: this.state.currentText + 1, catLicking: false, catSideways: true, sound: false})
     }
+  
+
+
+
+
+
 
 
 
   render () {
-    const { currentScene, currentText } = this.state;
+    const currentScene = this.state.scenes.find(scene => scene.id === this.state.currentScene)
+    const {currentText} = this.state
 
-    console.log(currentScene, currentText)
+    console.log(currentScene.catImage)
     
     return (
       <Container>
-        <Image imgSrc={scenes[currentScene].bgImage} />
+      {this.state.catLicking && <img src={currentScene.catImage}/>}
+      {currentScene.text[currentText] && 
         <Text onClick={this.goToNextText}>
-          {scenes[currentScene].text[currentText]}
-        </Text>
-        <Question question={scenes[currentScene].question} />
-        <Button buttonText='Next'onClick={this.goToNextScene}/>
+          {currentScene.text[currentText]}
+        </Text>}
+        {currentScene.sound && this.state.sound &&
+          <Sound 
+            url={currentScene.sound}
+            playStatus={Sound.status.PLAYING}
+            />}
+
+        {currentScene.id === 1 && <Question question={currentScene.question} />}
+        <button onClick={this.goToNextScene}>Next</button>
       </Container>
     )
   }

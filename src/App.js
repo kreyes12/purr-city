@@ -1,27 +1,25 @@
-import React, { Component } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import Scene from './Scene.js'
-import Story from './Story.js'
-import WelcomePage from './WelcomePage.js'
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Story from "./Story.js";
+import WelcomePage from "./WelcomePage.js";
 
 class App extends Component {
-
   state = {
-    showScenes: false,
-  }
+    showScenes: false
+  };
 
   showScenes = () => {
-  this.setState({showScenes: true})
-}
+    this.setState({ showScenes: true });
+  };
 
-  render () {
+  render() {
     return (
-      <div className='App'>
+      <div className="App">
         <Story />
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;

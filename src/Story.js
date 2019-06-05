@@ -9,22 +9,49 @@ import Question from "./Question";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
+
+const SCatImage = styled.img`
+  position: absolute;
+  z-index: 1000;
+  left: 60%;
+  top: 70%;
+`;
+
+const SButton = styled.button`
+  margin: 0 auto 25px;
+`;
+
+const SBgImage = styled.img`
+  margin-bottom: 25px;
+  max-width: 100vw;
+  max-height: 100vh;
+`;
+
+const ThirdCat = styled.img`
+  position: absolute;
+  z-index: 1000;
+  left: 47%;
+  top: 30%;
+`;
+
+// /imgs/thirdcat.png
+
+// const FourthCat - "/imgs/fourthcat.png";
 
 class Story extends Component {
   state = {
     currentSceneId: scenes[0].id,
-    catSideways: false,
-    catLicking: true,
-    currentText: 0,
-    catBack: false
+    currentText: 0
   };
+
+  //initial state - a variable called catPosition  const sideways const back e.g. const licking = "licking", cat pos = licking
 
   goToNextScene = () => {
     this.setState({
       currentSceneId: this.state.currentSceneId + 1,
-      catBack: true,
-      catSideways: false,
       currentText: 0
     });
   };
@@ -32,12 +59,10 @@ class Story extends Component {
   goToNextText = () => {
     this.setState({
       currentText: this.state.currentText + 1,
-      catLicking: true,
-      catSideways: true,
       sound: false
     });
   };
-
+  //why have sound false?  why have cat licking true and cat sideways true?
   render() {
     const currentScene = scenes.find(
       scene => scene.id === this.state.currentSceneId
@@ -46,12 +71,18 @@ class Story extends Component {
     const { currentText } = this.state;
     //same as const currentText = this.state.currentText;
 
-    console.log(currentScene.catImage);
+    // console.log(currentScene.bgImage);
 
     return (
       <Container>
-        {this.state.catLicking && <img src={currentScene.catImage} />}
+        <div>
+          <SBgImage src={currentScene.bgImage} />
+
+          <SCatImage src={currentScene.catImage} />
+        </div>
         {
+          //always rendering bg image, but only renders cat image when catVisible is true.
+          //what does the code above do with this.state.catVisible?
           //[currentText] - this is javascript which will evaluate the value e.g.1
         }
         {currentScene.text[currentText] && (
@@ -62,12 +93,18 @@ class Story extends Component {
         {currentScene.sound && (
           <Sound url={currentScene.sound} playStatus={Sound.status.PLAYING} />
         )}
-
-        {currentScene.id === 1 && <Question question={currentScene.question} />}
-        <button onClick={this.goToNextScene}>Next</button>
+        {currentScene.id === 1 && currentScene.question && (
+          <Question question={currentScene.question} />
+        )}
+        <SButton onClick={this.goToNextScene}>Next</SButton>
       </Container>
     );
   }
 }
 
+// What does the code above do? If the currenScene.id is 1 and if there is a currenScene.question,
+// run the question component?
+
+//Why is the cat licking always true and needed?
+//Why is Cat sideways?
 export default Story;

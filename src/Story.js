@@ -56,12 +56,17 @@ class Story extends Component {
     });
   };
 
-  goToNextText = () => {
-    this.setState({
-      currentText: this.state.currentText + 1,
-      sound: false
-    });
+  goToNextText = currentScene => {
+    if (currentScene.text[this.state.currentText + 1]) {
+      this.setState({
+        currentText: this.state.currentText + 1,
+        sound: false
+      });
+    } else {
+      this.goToNextScene();
+    }
   };
+
   //why have sound false?  why have cat licking true and cat sideways true?
   render() {
     const currentScene = scenes.find(
@@ -69,6 +74,7 @@ class Story extends Component {
     );
 
     const { currentText } = this.state;
+    // this is called destructuring - another way of reading variables out of an object
     //same as const currentText = this.state.currentText;
 
     // console.log(currentScene.bgImage);
@@ -77,16 +83,22 @@ class Story extends Component {
       <Container>
         <div>
           <SBgImage src={currentScene.bgImage} />
-
           <SCatImage src={currentScene.catImage} />
         </div>
         {
           //always rendering bg image, but only renders cat image when catVisible is true.
           //what does the code above do with this.state.catVisible?
           //[currentText] - this is javascript which will evaluate the value e.g.1
+          //if there is some text , && - javascript and, then render it .
+          //JS can use non booleans and booleans for &&, for non booleans - 2 and 3 is true because they are truthy, but 0 is falsey
+          //Most languages will return a boolean, but JS will return left hand or right hand argument
+          //All strings are true, but empty strings are falsey,
+          //if currentScene.sound is truthy - then render the right handside - which is the component.
+          //but if no currentScene.sound is falsey - it won't render the component.
+          //only renders a question in Scene 1
         }
         {currentScene.text[currentText] && (
-          <Text onClick={this.goToNextText}>
+          <Text onClick={() => this.goToNextText(currentScene)}>
             {currentScene.text[currentText]}
           </Text>
         )}
